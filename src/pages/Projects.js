@@ -1,0 +1,23 @@
+import React from 'react';
+import ProjectCard from '../components/ProjectCard';
+
+function Projects() {
+  const projects = [
+    { title: 'Salle de bain – Beaune', image: '/images/bathroom.jpg' },
+    { title: 'Sol béton ciré – Dijon', image: '/images/floor.jpg' },
+    { title: 'Plan de travail – Chalon-sur-Saône', image: '/images/kitchen.jpg' }
+  ];
+
+  return (
+    <section className="p-12">
+      <h2 className="text-3xl font-bold text-center mb-8">Nos Réalisations</h2>
+      <div className="grid md:grid-cols-3 gap-8">
+        {projects.map((project, index) => (
+          <ProjectCard key={index} title={project.title} image={project.image} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export default Projects;

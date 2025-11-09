@@ -1,9 +1,11 @@
 [build]
+  base = "jpdc-site-full"
   command = "npm run build"
-  publish = "build"
+  publish = "jpdc-site-full/build"
 
 [build.environment]
   NODE_VERSION = "18"
+
 
 
 

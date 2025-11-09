@@ -2,11 +2,10 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-
-import Home from './pages/Home';
+import Hero from './components/Hero';
+import About from './components/About';
 import Services from './pages/Services';
 import Projects from './pages/Projects';
-import About from './pages/About';
 import Contact from './pages/Contact';
 
 function App() {
@@ -15,10 +14,12 @@ function App() {
       <Navbar />
       <main className="flex-grow">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/projects" element={<Projects />} />
+          <Route path="/" element={<Hero />} />
           <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+<Route path="/projects" element={<Projects />} />
+
+          <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
@@ -28,3 +29,4 @@ function App() {
 }
 
 export default App;
+

@@ -1,0 +1,98 @@
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Link } from "react-router-dom";
+import { useRef } from "react";
+
+function Hero() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  // Effet parallax et fondu
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+
+  return (
+    <motion.section
+      ref={ref}
+      className="relative flex items-center justify-center h-screen text-center text-white overflow-hidden"
+      style={{ opacity }}
+    >
+      {/* Image de fond avec effet parallax */}
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url(${process.env.PUBLIC_URL}/images/hero.jpg)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          y,
+        }}
+      />
+
+      {/* Dégradé sombre */}
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+
+      {/* Contenu principal */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="relative z-10 p-8 rounded-2xl max-w-3xl"
+      >
+        {/* Effet lumière sur le titre */}
+        <motion.h1
+          className="text-4xl md:text-6xl font-bold mb-4 relative overflow-hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+        >
+          <span className="relative inline-block">
+            L’élégance du béton ciré
+            <motion.span
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+              animate={{
+                x: ["-100%", "100%"],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              style={{
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+              }}
+            />
+          </span>
+        </motion.h1>
+
+        <motion.p
+          className="text-white/90 text-lg md:text-xl mb-6 drop-shadow-md"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 1 }}
+        >
+          Sur mesure pour vos espaces en{" "}
+          <span className="text-cuivre font-semibold">Bourgogne</span> et{" "}
+          <span className="text-cuivre font-semibold">Rhône-Alpes</span>
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 1 }}
+        >
+          <Link
+            to="/contact"
+            className="bg-cuivre px-6 py-3 font-semibold rounded hover:bg-cuivre/80 transition"
+          >
+            Demander un devis
+          </Link>
+        </motion.div>
+      </motion.div>
+    </motion.section>
+  );
+}
+
+export default Hero;

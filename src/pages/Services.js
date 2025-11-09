@@ -1,32 +1,38 @@
-import React from 'react';
-import ServiceCard from '../components/ServiceCard';
+import React from "react";
+import ServiceCard from "../components/ServiceCard";
+import { motion } from 'framer-motion';
 
-function Services() {
-  const services = [
-    {
-      title: 'Application de béton ciré',
-      description: 'Pour sols, murs, escaliers, cuisines et salles de bains. Chaque application est unique : teinte, texture, finition.'
-    },
-    {
-      title: 'Rénovation',
-      description: 'Nous redonnons vie à vos surfaces existantes sans tout casser : recouvrement, lissage, harmonisation.'
-    },
-    {
-      title: 'Conseil & accompagnement',
-      description: 'Étude personnalisée, conseils techniques et esthétiques pour un rendu harmonieux et durable.'
-    }
-  ];
-
+const Services = () => {
   return (
-    <section className="p-12">
-      <h2 className="text-3xl font-bold text-center mb-8">Nos Services</h2>
-      <div className="grid md:grid-cols-3 gap-8">
-        {services.map((service, index) => (
-          <ServiceCard key={index} title={service.title} description={service.description} />
-        ))}
+    <section className="py-20 bg-gray-50">
+      <div className="max-w-6xl mx-auto px-6 text-center">
+        <h2 className="text-4xl font-bold text-gray-800 mb-6">
+          Nos Services
+        </h2>
+        <p className="text-gray-600 mb-12">
+          JP Développement Conseil by Du Béton dans la Maison vous accompagne dans la conception 
+          et la réalisation d’intérieurs uniques. Chaque projet est pensé dans le respect de vos envies 
+          et de votre style, pour sublimer la matière et révéler vos espaces.
+        </p>
+
+        <div className="grid md:grid-cols-3 gap-10">
+          <ServiceCard
+            title="Béton Ciré"
+            description="Revêtement décoratif et intemporel pour sols, murs, cuisines ou salles de bain. Offrez à vos espaces une finition élégante, durable et facile à entretenir."
+          />
+          <ServiceCard
+            title="Enduits Décoratifs"
+            description="Effets minéraux, texturés ou métallisés : créez une ambiance unique grâce à des finitions sur mesure alliant esthétique et authenticité."
+          />
+          <ServiceCard
+            title="Conseil & Suivi de Projet"
+            description="De la première idée à la livraison du chantier, bénéficiez d’un accompagnement professionnel, transparent et personnalisé à chaque étape."
+          />
+        </div>
       </div>
     </section>
   );
-}
+};
 
 export default Services;
+

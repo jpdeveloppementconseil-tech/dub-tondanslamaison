@@ -1,0 +1,4 @@
+[build]
+base = "jpdc-site-full"
+command = "npm run build"
+publish = "jpdc-site-full/build"

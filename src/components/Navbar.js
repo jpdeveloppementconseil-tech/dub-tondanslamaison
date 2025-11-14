@@ -76,7 +76,7 @@ function Navbar() {
           menuOpen
             ? 'max-h-64 opacity-100 translate-y-0'
             : 'max-h-0 opacity-0 -translate-y-4'
-        } bg-black/90 text-center`}
+        } bg-black/90 text-white text-center`}
       >
         <div className="py-4 space-y-3">
           {['Accueil', 'Réalisations', 'Services', 'À propos', 'Contact'].map(

@@ -1,38 +1,31 @@
-import React from "react";
-import ServiceCard from "../components/ServiceCard";
-import { motion } from 'framer-motion';
+import { Helmet } from "react-helmet-async";
 
-const Services = () => {
+function Services() {
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-6 text-center">
-        <h2 className="text-4xl font-bold text-gray-800 mb-6">
-          Nos Services
-        </h2>
-        <p className="text-gray-600 mb-12">
-          JP Développement Conseil by Du Béton dans la Maison vous accompagne dans la conception 
-          et la réalisation d’intérieurs uniques. Chaque projet est pensé dans le respect de vos envies 
-          et de votre style, pour sublimer la matière et révéler vos espaces.
-        </p>
+    <>
+      <Helmet>
+        <title>Services en béton ciré – JP Développement Conseil</title>
+        <meta
+          name="description"
+          content="Applications de béton ciré pour sols, murs, salles de bain, cuisines, escaliers et surfaces sur mesure. Prestations premium en Bourgogne et Rhône-Alpes."
+        />
+      </Helmet>
 
-        <div className="grid md:grid-cols-3 gap-10">
-          <ServiceCard
-            title="Béton Ciré"
-            description="Revêtement décoratif et intemporel pour sols, murs, cuisines ou salles de bain. Offrez à vos espaces une finition élégante, durable et facile à entretenir."
-          />
-          <ServiceCard
-            title="Enduits Décoratifs"
-            description="Effets minéraux, texturés ou métallisés : créez une ambiance unique grâce à des finitions sur mesure alliant esthétique et authenticité."
-          />
-          <ServiceCard
-            title="Conseil & Suivi de Projet"
-            description="De la première idée à la livraison du chantier, bénéficiez d’un accompagnement professionnel, transparent et personnalisé à chaque étape."
-          />
-        </div>
+      <div className="max-w-3xl mx-auto px-6 py-20">
+        <h1 className="text-3xl md:text-5xl font-bold mb-6">Nos services</h1>
+
+        <ul className="space-y-4 text-lg text-gray-700">
+          <li>✔ Sols en béton ciré</li>
+          <li>✔ Murs décoratifs</li>
+          <li>✔ Salles de bain et douches italiennes</li>
+          <li>✔ Plan de travail et cuisine</li>
+          <li>✔ Escaliers en béton ciré</li>
+          <li>✔ Rénovation & reprise de surfaces</li>
+        </ul>
       </div>
-    </section>
+    </>
   );
-};
+}
 
 export default Services;
 

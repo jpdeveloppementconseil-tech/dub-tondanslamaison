@@ -8,25 +8,28 @@ import Services from './pages/Services';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 
+import { HelmetProvider } from "react-helmet-async";
+
 function App() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<Hero />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-<Route path="/projects" element={<Projects />} />
+    <HelmetProvider>
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
 
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Hero />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </main>
+
+        <Footer />
+      </div>
+    </HelmetProvider>
   );
 }
 
 export default App;
-

@@ -1,4 +1,8 @@
-http://* https://dubetondanslamaison.com/:splat 301!
-https://www.dubetondanslamaison.com/* https://dubetondanslamaison.com/:splat 301!
-/*   /index.html   200
-/*    /index.html   200
+# Redirige http vers https (non-www vers www)
+http://dubetondanslamaison.com/*  
+https://dubetondanslamaison.com/:splat 301!
+https://www.dubetondanslamaison.com/*  
+https://dubetondanslamaison.com/:splat 301!
+
+# Support du React Router (évite les erreurs 404 en navigation)
+*    /index.html   200

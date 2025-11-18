@@ -1,5 +1,6 @@
 import React from "react";
-import heroImage from "../assets/images/hero.jpg";
+
+const heroImage = "/images/hero.jpg";
 
 function Hero() {
   return (
@@ -30,4 +31,3 @@ function Hero() {
 }
 
 export default Hero;
-

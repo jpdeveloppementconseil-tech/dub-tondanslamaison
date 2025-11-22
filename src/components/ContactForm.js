@@ -9,10 +9,12 @@ function ContactForm() {
     const data = new FormData(form);
 
     try {
-      const response = await fetch("https://formspree.io/f/mzzjobao", {
+      const response = await fetch("https://getform.io/f/arogdkkb", {
         method: "POST",
         body: data,
-        headers: { Accept: "application/json" }
+        headers: {
+          Accept: "application/json",
+        },
       });
 
       if (response.ok) {
@@ -27,14 +29,49 @@ function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto space-y-4">
-      <input type="text" name="name" placeholder="Votre nom" required />
-      <input type="email" name="email" placeholder="Votre email" required />
-      <textarea name="message" placeholder="Votre message" required></textarea>
+    <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-6 space-y-4">
+      
+      <div>
+        <label className="block mb-2 font-medium">Nom</label>
+        <input
+          type="text"
+          name="name"
+          required
+          className="w-full p-3 border rounded"
+          placeholder="Votre nom"
+        />
+      </div>
 
-      <button type="submit">Envoyer</button>
+      <div>
+        <label className="block mb-2 font-medium">Email</label>
+        <input
+          type="email"
+          name="email"
+          required
+          className="w-full p-3 border rounded"
+          placeholder="Votre email"
+        />
+      </div>
 
-      {status && <p>{status}</p>}
+      <div>
+        <label className="block mb-2 font-medium">Message</label>
+        <textarea
+          name="message"
+          rows="5"
+          required
+          className="w-full p-3 border rounded"
+          placeholder="Votre message…"
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        className="bg-black text-white px-6 py-3 rounded hover:bg-gray-800"
+      >
+        Envoyer
+      </button>
+
+      {status && <p className="mt-4 text-center">{status}</p>}
     </form>
   );
 }

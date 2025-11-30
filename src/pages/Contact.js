@@ -1,10 +1,10 @@
+
 import React from "react";
 import { Helmet } from "react-helmet-async";
 
 function Contact() {
   return (
     <div className="p-8 max-w-3xl mx-auto">
-
       <Helmet>
         <title>Contact – JP Développement Conseil</title>
         <meta
@@ -19,24 +19,35 @@ function Contact() {
         Pour toute demande d'information ou de devis, utilisez le formulaire ci-dessous.
       </p>
 
-      <form className="space-y-4">
+      {/* Formulaire connecté à Formspree */}
+      <form
+        action="https://formspree.io/f/mzzjobao"
+        method="POST"
+        className="space-y-4"
+      >
         <input
           type="text"
+          name="name"
           placeholder="Votre nom"
           className="w-full p-3 border rounded"
           required
         />
         <input
           type="email"
+          name="email"
           placeholder="Votre email"
           className="w-full p-3 border rounded"
           required
         />
         <textarea
+          name="message"
           placeholder="Votre message"
           className="w-full p-3 border rounded h-32"
           required
         ></textarea>
+
+        {/* champ caché optionnel pour le sujet */}
+        <input type="hidden" name="_subject" value="Nouveau message du site" />
 
         <button
           type="submit"

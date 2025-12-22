@@ -5,15 +5,16 @@ const heroImage = "/images/hero.jpg";
 function Hero() {
   return (
     <div
-      className="h-[80vh] bg-cover bg-center flex items-center justify-center relative"
-      style={{ backgroundImage: `url(${heroImage})` }}
+      className="bg-cover bg-center flex items-center justify-center relative"
+      style={{
+        backgroundImage: `url(${heroImage})`,
+        minHeight: "80vh",
+      }}
     >
       <div className="absolute inset-0 bg-black/40"></div>
 
       <div className="relative text-center text-white px-6 py-8 backdrop-blur-md bg-black/30 rounded-lg shadow-xl max-w-xl">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          L’élégance du béton ciré
-        </h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">L’élégance du béton ciré</h1>
 
         <p className="text-lg md:text-xl mb-6">
           Sur mesure pour vos espaces en Bourgogne et Rhône-Alpes

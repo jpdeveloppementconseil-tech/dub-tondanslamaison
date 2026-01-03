@@ -11,6 +11,7 @@ import Services from "./pages/Services";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 
+// ✅ IMPORTANT : mets le BON chemin ici (voir section 2)
 import CityServicePage from "./pages/CityServicePage";
 
 function App() {
@@ -24,11 +25,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
 
-            {/* Route dynamique SEO villes */}
-            <Route
-              path="/beton-cire-:citySlug"
-              element={<CityServicePage />}
-            />
+            {/* ✅ Route dynamique VILLES */}
+            <Route path="/beton-cire-:citySlug" element={<CityServicePage />} />
 
             <Route path="/services" element={<Services />} />
             <Route path="/projects" element={<Projects />} />
@@ -43,3 +41,4 @@ function App() {
 }
 
 export default App;
+

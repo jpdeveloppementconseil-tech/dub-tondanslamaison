@@ -11,8 +11,7 @@ import Services from "./pages/Services";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 
-// ✅ IMPORTANT : mets le BON chemin ici (voir section 2)
-import CityServicePage from "./pages/CityServicePage";
+import CityServicePage from "./pages/cities/CityServicePage";
 
 function App() {
   return (
@@ -25,12 +24,13 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
 
-            {/* ✅ Route dynamique VILLES */}
-            <Route path="/beton-cire-:citySlug" element={<CityServicePage />} />
-
+            {/* Pages normales */}
             <Route path="/services" element={<Services />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
+
+            {/* Route dynamique villes */}
+            <Route path="/beton-cire/:citySlug" element={<CityServicePage />} />
           </Routes>
         </main>
 

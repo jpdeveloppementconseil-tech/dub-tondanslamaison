@@ -11,7 +11,8 @@ import Services from "./pages/Services";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 
-import CityServicePage from "./pages/cities/CityServicePage";
+import CityServicePage from "./pages/CityServicePage";
+
 
 function App() {
   return (

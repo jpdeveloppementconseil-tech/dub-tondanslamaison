@@ -13,7 +13,6 @@ import Contact from "./pages/Contact";
 
 import CityServicePage from "./pages/CityServicePage";
 
-
 function App() {
   return (
     <HelmetProvider>
@@ -30,16 +29,10 @@ function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
 
-            {/* Pages normales */}
-<Route path="/services" element={<Services />} />
-<Route path="/projects" element={<Projects />} />
-<Route path="/contact" element={<Contact />} />
-
-{/* Routes dynamiques villes (2 formats acceptés) */}
-<Route path="/beton-cire/:citySlug" element={<CityServicePage />} />
-<Route path="/beton-cire-:citySlug" element={<CityServicePage />} />
-
-
+            {/* Routes dynamiques villes */}
+            <Route path="/beton-cire/:citySlug" element={<CityServicePage />} />
+            <Route path="/beton-cire-:citySlug" element={<CityServicePage />} />
+          </Routes>
         </main>
 
         <Footer />
@@ -49,4 +42,3 @@ function App() {
 }
 
 export default App;
-

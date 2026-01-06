@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { CITIES } from "./citiesData"; // ✅ adapte si ton fichier n'est pas dans le même dossier
+import { CITIES } from "./citiesData"; // ✅ si citiesData.js est bien dans src/pages
 
 export default function Services() {
   return (
@@ -29,7 +29,10 @@ export default function Services() {
       <ul className="list-disc pl-6 space-y-2">
         {CITIES.map((city) => (
           <li key={city.slug}>
-            <Link className="text-cuivre hover:underline" to={`/beton-cire-${city.slug}`}>
+            <Link
+              className="text-cuivre hover:underline"
+              to={`/beton-cire/${city.slug}`}   // ✅ SLASH (route dynamique)
+            >
               Béton ciré à {city.name}
             </Link>
           </li>

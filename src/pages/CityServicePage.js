@@ -1,7 +1,18 @@
+// src/pages/CityServicePage.js
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { CITIES, CITY_PAGES, SITE } from "./citiesData";
+
+function normalizeSlug(input = "") {
+  return String(input)
+    .trim()
+    .toLowerCase()
+    .normalize("NFD") // enlève les accents
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/_/g, "-")
+    .replace(/\s+/g, "-");
+}
 
 function buildFaqJsonLd(faq = []) {
   return {
@@ -17,92 +28,85 @@ function buildFaqJsonLd(faq = []) {
 
 export default function CityServicePage() {
   const { citySlug } = useParams();
+  const slug = normalizeSlug(citySlug);
 
-  const city = CITIES.find((c) => c.slug === citySlug);
-  const page = CITY_PAGES[citySlug];
+  const city = CITIES.find((c) => c.slug === slug);
+  const page = CITY_PAGES[slug];
 
-  // ✅ Si l’URL ne correspond à aucune ville configurée
+  // ✅ si slug inconnu : on affiche un message (pas une page blanche)
   if (!city || !page) {
     return (
-      <section className="p-12 text-center">
-        <h1 className="text-2xl font-bold">Page introuvable</h1>
-        <p className="mt-3">La ville demandée n’existe pas (ou n’est pas encore configurée).</p>
-        <Link className="mt-4 inline-block text-cuivre hover:underline" to="/services">
+      <section className="p-12 max-w-4xl mx-auto">
+        <h1 className="text-2xl font-bold mb-4">Page introuvable</h1>
+        <p className="mb-4">
+          La ville demandée n’existe pas (ou n’est pas encore configurée).
+        </p>
+        <Link className="text-cuivre hover:underline" to="/services">
           Voir nos services
         </Link>
       </section>
     );
   }
 
-  const canonicalDash = `${SITE.domain}/beton-cire-${city.slug}`;
-  const faqJsonLd = buildFaqJsonLd(page.faq);
+  const title = `Béton ciré à ${city.name} | ${SITE.brand}`;
+  const description = `Artisan béton ciré à ${city.name} : sols, salle de bain, douche à l’italienne, murs décoratifs et sur-mesure. Devis rapide.`;
+  const canonical = `${SITE.domain}/beton-cire-${city.slug}`;
 
   return (
-    <main>
+    <section className="p-12 max-w-4xl mx-auto">
       <Helmet>
-        <title>{page.title}</title>
-        <meta name="description" content={page.description} />
-        <link rel="canonical" href={canonicalDash} />
-
-        <meta property="og:title" content={page.title} />
-        <meta property="og:description" content={page.description} />
-        <meta property="og:url" content={canonicalDash} />
-        <meta property="og:type" content="website" />
-
-        <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonical} />
+        <script type="application/ld+json">
+          {JSON.stringify(buildFaqJsonLd(page.faq))}
+        </script>
       </Helmet>
 
-      <section className="p-12 bg-white">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold">{page.h1}</h1>
-          <p className="mt-4 text-lg text-gray-700">{page.intro}</p>
+      <h1 className="text-3xl font-bold mb-6">Béton ciré à {city.name}</h1>
 
-          <h2 className="mt-10 text-2xl font-semibold">
-            Nos prestations en béton ciré à {city.name}
-          </h2>
+      <p className="mb-8">{page.intro}</p>
 
-          <ul className="mt-4 list-disc pl-6 space-y-2 text-gray-700">
-            {page.bullets.map((b, idx) => (
-              <li key={idx}>{b}</li>
-            ))}
-          </ul>
+      <h2 className="text-2xl font-semibold mb-4">
+        Nos prestations en béton ciré à {city.name}
+      </h2>
 
-          <div className="mt-10 p-6 rounded-lg bg-gray-50 border">
-            <h2 className="text-2xl font-semibold">{page.ctaTitle}</h2>
-            <p className="mt-2 text-gray-700">{page.ctaText}</p>
+      <ul className="list-disc pl-6 space-y-2 mb-10">
+        {page.services.map((s, idx) => (
+          <li key={idx}>{s}</li>
+        ))}
+      </ul>
 
-            <Link
-              to="/contact"
-              className="mt-5 inline-block bg-orange-600 text-white px-6 py-3 rounded-md hover:opacity-90"
-            >
-              Demander un devis
-            </Link>
-          </div>
+      <h2 className="text-2xl font-semibold mb-4">
+        Devis béton ciré à {city.name}
+      </h2>
+      <p className="mb-6">
+        Vous avez un projet (surface, type de pièce, support, teinte souhaitée) ?
+        Décrivez-nous votre besoin : nous vous répondons rapidement.
+      </p>
 
-          <h2 className="mt-10 text-2xl font-semibold">Interventions autour de {city.name}</h2>
-          <p className="mt-2 text-gray-700">
-            Nous intervenons aussi dans les communes proches :{" "}
-            <strong>{city.nearby.join(" · ")}</strong>.
-          </p>
+      <div className="mb-12">
+        <Link
+          to="/contact"
+          className="inline-block bg-orange-500 text-white px-6 py-3 rounded hover:bg-orange-600"
+        >
+          Demander un devis
+        </Link>
+      </div>
 
-          <h2 className="mt-10 text-2xl font-semibold">Questions fréquentes</h2>
-          <div className="mt-4 space-y-4">
-            {page.faq.map((item, idx) => (
-              <div key={idx} className="border rounded-lg p-4">
-                <p className="font-semibold">{item.q}</p>
-                <p className="mt-1 text-gray-700">{item.a}</p>
-              </div>
-            ))}
-          </div>
+      <h2 className="text-2xl font-semibold mb-4">
+        Interventions autour de {city.name}
+      </h2>
+      <p>
+        Nous intervenons également dans les communes proches :{" "}
+        <strong>{city.nearby.join(" · ")}</strong>.
+      </p>
 
-          <div className="mt-10 text-sm text-gray-600">
-            <Link className="text-cuivre hover:underline" to="/services">
-              ← Retour aux services
-            </Link>
-          </div>
-        </div>
-      </section>
-    </main>
+      <div className="mt-10">
+        <Link className="text-cuivre hover:underline" to="/services">
+          ← Retour aux services
+        </Link>
+      </div>
+    </section>
   );
 }
-

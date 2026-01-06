@@ -31,8 +31,10 @@ function App() {
             <Route path="/contact" element={<Contact />} />
 
             {/* Route dynamique villes */}
+            // ✅ Routes dynamiques villes (2 formats acceptés)
             <Route path="/beton-cire/:citySlug" element={<CityServicePage />} />
-          </Routes>
+            <Route path="/beton-cire-:citySlug" element={<CityServicePage />} />
+
         </main>
 
         <Footer />

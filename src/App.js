@@ -30,10 +30,15 @@ function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
 
-            {/* Route dynamique villes */}
-            // ✅ Routes dynamiques villes (2 formats acceptés)
-            <Route path="/beton-cire/:citySlug" element={<CityServicePage />} />
-            <Route path="/beton-cire-:citySlug" element={<CityServicePage />} />
+            {/* Pages normales */}
+<Route path="/services" element={<Services />} />
+<Route path="/projects" element={<Projects />} />
+<Route path="/contact" element={<Contact />} />
+
+{/* Routes dynamiques villes (2 formats acceptés) */}
+<Route path="/beton-cire/:citySlug" element={<CityServicePage />} />
+<Route path="/beton-cire-:citySlug" element={<CityServicePage />} />
+
 
         </main>
 

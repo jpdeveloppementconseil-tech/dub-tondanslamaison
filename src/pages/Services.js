@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { CITIES } from "./citiesData"; // ✅ adapte si ton fichier n'est pas dans le même dossier
 
 export default function Services() {
   return (
@@ -16,52 +17,23 @@ export default function Services() {
       <h1 className="text-3xl font-bold mb-6">Nos services en béton ciré</h1>
 
       <p className="mb-6">
-        Nous réalisons des projets en béton ciré sur mesure : sols, salles de
-        bain, douches à l’italienne, murs décoratifs et surfaces personnalisées.
-        Chaque réalisation est pensée pour être durable, esthétique et facile
-        d’entretien.
+        Nous réalisons des projets en béton ciré sur mesure : sols, salles de bain,
+        douches à l’italienne, murs décoratifs et surfaces personnalisées. Chaque
+        réalisation est pensée pour être durable, esthétique et facile d’entretien.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-10 mb-4">
-        Zones d’intervention
-      </h2>
+      <h2 className="text-2xl font-semibold mt-10 mb-4">Zones d’intervention</h2>
 
-      <p className="mb-4">
-        Nous intervenons principalement dans les villes suivantes :
-      </p>
+      <p className="mb-4">Nous intervenons principalement dans les villes suivantes :</p>
 
       <ul className="list-disc pl-6 space-y-2">
-        <li>
-          <Link className="text-cuivre hover:underline" to="/beton-cire-lyon">
-            Béton ciré à Lyon
-          </Link>
-        </li>
-        <li>
-          <Link className="text-cuivre hover:underline" to="/beton-cire-macon">
-            Béton ciré à Mâcon
-          </Link>
-        </li>
-        <li>
-          <Link className="text-cuivre hover:underline" to="/beton-cire-dijon">
-            Béton ciré à Dijon
-          </Link>
-        </li>
-        <li>
-          <Link
-            className="text-cuivre hover:underline"
-            to="/beton-cire-chalon-sur-saone"
-          >
-            Béton ciré à Chalon-sur-Saône
-          </Link>
-        </li>
-        <li>
-          <Link
-            className="text-cuivre hover:underline"
-            to="/beton-cire-bourg-en-bresse"
-          >
-            Béton ciré à Bourg-en-Bresse
-          </Link>
-        </li>
+        {CITIES.map((city) => (
+          <li key={city.slug}>
+            <Link className="text-cuivre hover:underline" to={`/beton-cire-${city.slug}`}>
+              Béton ciré à {city.name}
+            </Link>
+          </li>
+        ))}
       </ul>
 
       <div className="mt-10">
@@ -75,4 +47,3 @@ export default function Services() {
     </section>
   );
 }
-

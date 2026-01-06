@@ -3,7 +3,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { CITIES, CITY_PAGES, SITE } from "./citiesData";
+import { CITY_PAGES, SITE } from "./citiesData";
 
 function buildFaqJsonLd(faq = []) {
   return {
@@ -22,87 +22,127 @@ function buildFaqJsonLd(faq = []) {
 
 export default function CityServicePage() {
   const { citySlug } = useParams();
-  const city = (citySlug || "").toLowerCase();
-  const data = CITY_PAGES[city];
 
-  // Si slug inconnu => message + lien retour
-  if (!data) {
+  // Normalisation simple (évite les crash)
+  const slug = (citySlug || "").toLowerCase().trim();
+  const page = CITY_PAGES[slug];
+
+  // ✅ Fallback visible (au lieu de page blanche)
+  if (!page) {
     return (
       <section className="p-12 text-center">
-        <h1 className="text-2xl font-semibold">Page introuvable</h1>
-        <p className="mt-2">La ville demandée n’existe pas (ou n’est pas encore configurée).</p>
-        <Link className="inline-block mt-4 text-cuivre hover:underline" to="/services">
+        <Helmet>
+          <title>Béton ciré – Ville non trouvée | {SITE.name}</title>
+          <meta
+            name="description"
+            content="La ville demandée n’existe pas ou n’est pas encore configurée. Découvrez nos zones d’intervention."
+          />
+          <meta name="robots" content="noindex" />
+        </Helmet>
+
+        <h1 className="text-3xl font-bold mb-4">Page introuvable</h1>
+        <p className="mb-6">
+          La ville demandée n’existe pas (ou n’est pas encore configurée).
+        </p>
+
+        <Link to="/services" className="text-cuivre hover:underline">
           Voir nos services
         </Link>
       </section>
     );
   }
 
-  const cityInfo = CITIES.find((c) => c.slug === city);
-  const canonical = `${SITE.siteUrl}/beton-cire-${city}`;
+  const canonical = `${SITE.url}/beton-cire-${page.slug}`;
+  const faqJsonLd = buildFaqJsonLd(page.faq || []);
 
   return (
-    <main className="p-12 max-w-4xl mx-auto">
+    <main className="bg-white">
       <Helmet>
-        <title>{data.title}</title>
-        <meta name="description" content={data.description} />
+        <title>{page.metaTitle}</title>
+        <meta name="description" content={page.metaDescription} />
         <link rel="canonical" href={canonical} />
 
-        {/* OpenGraph simple */}
-        <meta property="og:title" content={data.title} />
-        <meta property="og:description" content={data.description} />
+        {/* OpenGraph (bonus) */}
+        <meta property="og:title" content={page.metaTitle} />
+        <meta property="og:description" content={page.metaDescription} />
         <meta property="og:url" content={canonical} />
+        <meta property="og:type" content="website" />
 
         {/* FAQ JSON-LD */}
-        {Array.isArray(data.faq) && data.faq.length > 0 && (
-          <script type="application/ld+json">{JSON.stringify(buildFaqJsonLd(data.faq))}</script>
-        )}
+        {page.faq?.length ? (
+          <script type="application/ld+json">
+            {JSON.stringify(faqJsonLd)}
+          </script>
+        ) : null}
       </Helmet>
 
-      <h1 className="text-3xl font-bold">{data.h1}</h1>
-      <p className="mt-4 text-lg">{data.intro}</p>
+      <section className="p-12 max-w-4xl mx-auto">
+        <h1 className="text-4xl font-extrabold mb-4">
+          Béton ciré à {page.city}
+        </h1>
 
-      <h2 className="mt-10 text-2xl font-semibold">Nos prestations en béton ciré à {cityInfo?.name || data.h1}</h2>
-      <ul className="mt-4 list-disc pl-6 space-y-2">
-        {data.bullets.map((b, idx) => (
-          <li key={idx}>{b}</li>
-        ))}
-      </ul>
+        <p className="text-lg text-gray-700 mb-8">{page.intro}</p>
 
-      <section className="mt-10 p-6 rounded-xl bg-white shadow">
-        <h2 className="text-xl font-semibold">{data.ctaTitle}</h2>
-        <p className="mt-2">{data.ctaText}</p>
+        <h2 className="text-2xl font-bold mb-4">
+          Nos prestations en béton ciré à {page.city}
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-10">
+          {(page.bullets || []).map((b, idx) => (
+            <li key={idx}>{b}</li>
+          ))}
+        </ul>
+
+        <h2 className="text-2xl font-bold mb-3">
+          Devis béton ciré à {page.city}
+        </h2>
+        <p className="text-gray-700 mb-6">
+          Vous avez un projet (sol, salle de bain, douche, mur décoratif) à{" "}
+          {page.city} ou dans les environs ? Décrivez-nous la surface, le type de
+          pièce, l’état du support et la teinte souhaitée : nous vous répondons
+          rapidement.
+        </p>
 
         <Link
           to="/contact"
-          className="inline-block mt-5 bg-cuivre text-white px-6 py-3 rounded-lg hover:opacity-90"
+          className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded"
         >
           Demander un devis
         </Link>
-      </section>
 
-      {cityInfo?.nearby?.length ? (
-        <section className="mt-10">
-          <h2 className="text-xl font-semibold">Interventions autour de {cityInfo.name}</h2>
-          <p className="mt-2">
-            Nous intervenons également dans les communes proches :{" "}
-            <span className="font-semibold">{cityInfo.nearby.join(" · ")}</span>.
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold mb-3">
+            Interventions autour de {page.city}
+          </h2>
+          <p className="text-gray-700">
+            {(page.nearby && page.nearby.length)
+              ? (
+                <>
+                  Nous intervenons aussi dans les communes proches :{" "}
+                  <span className="font-semibold">
+                    {page.nearby.join(" · ")}
+                  </span>
+                  .
+                </>
+              )
+              : "Nous intervenons aussi dans les communes alentours pour étudier votre projet."
+            }
           </p>
-        </section>
-      ) : null}
+        </div>
 
-      <section className="mt-12">
-        <h2 className="text-xl font-semibold">Zones d’intervention</h2>
-        <p className="mt-2">Retrouvez aussi nos pages locales :</p>
-        <ul className="mt-3 list-disc pl-6 space-y-1">
-          {CITIES.map((c) => (
-            <li key={c.slug}>
-              <Link className="text-cuivre hover:underline" to={`/beton-cire-${c.slug}`}>
-                Béton ciré à {c.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-12 border-t pt-8 text-sm text-gray-600">
+          <p>
+            {SITE.name} – {SITE.brand} · {SITE.region}
+          </p>
+          <p>
+            📞 {SITE.phone} · ✉️ {SITE.email}
+          </p>
+          <p className="mt-2">
+            <Link to="/services" className="text-cuivre hover:underline">
+              Retour aux services
+            </Link>
+          </p>
+        </div>
       </section>
     </main>
   );

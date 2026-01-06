@@ -1,137 +1,138 @@
 // src/pages/citiesData.js
 
 export const SITE = {
-  brand: "JP Développement Conseil",
-  byline: "Du Béton dans la Maison",
-  siteUrl: "https://dubetondanslamaison.com",
+  name: "JP Développement Conseil",
+  brand: "Du Béton dans la Maison",
+  url: "https://dubetondanslamaison.com",
   phone: "06 98 55 66 48",
   email: "jpdeveloppementconseil@gmail.com",
-  serviceRegion: "Bourgogne–Rhône-Alpes",
+  instagram: "dbdlm71",
+  region: "Bourgogne – Rhône-Alpes",
 };
 
-// Slugs utilisés dans les URLs : /beton-cire-<slug>
 export const CITIES = [
-  { slug: "lyon", name: "Lyon", nearby: ["Villeurbanne", "Caluire-et-Cuire", "Oullins", "Tassin-la-Demi-Lune", "Bron"] },
-  { slug: "macon", name: "Mâcon", nearby: ["Charnay-lès-Mâcon", "Sancé", "Crêches-sur-Saône", "Saint-Laurent-sur-Saône", "Hurigny"] },
-  { slug: "dijon", name: "Dijon", nearby: ["Chenôve", "Talant", "Quetigny", "Chevigny-Saint-Sauveur", "Fontaine-lès-Dijon"] },
-  { slug: "chalon-sur-saone", name: "Chalon-sur-Saône", nearby: ["Saint-Rémy", "Châtenoy-le-Royal", "Champforgeuil", "Lux", "Crissey"] },
-  { slug: "bourg-en-bresse", name: "Bourg-en-Bresse", nearby: ["Péronnas", "Saint-Denis-lès-Bourg", "Viriat", "Montagnat", "Tossiat"] },
+  { slug: "lyon", name: "Lyon" },
+  { slug: "macon", name: "Mâcon" },
+  { slug: "dijon", name: "Dijon" },
+  { slug: "chalon-sur-saone", name: "Chalon-sur-Saône" },
+  { slug: "bourg-en-bresse", name: "Bourg-en-Bresse" },
 ];
 
-// Contenu SEO équilibré (même structure pour chaque ville)
+// Pages SEO (1 par ville)
+// slug = ce qui vient après "beton-cire-" ou après "beton-cire/"
 export const CITY_PAGES = {
   lyon: {
-    title: "Béton ciré à Lyon | Sols, salle de bain, douche & sur mesure",
-    description:
-      "Artisan béton ciré à Lyon : sol, salle de bain, douche à l’italienne, murs et surfaces sur mesure. Devis rapide, finitions soignées.",
-    h1: "Béton ciré à Lyon",
+    slug: "lyon",
+    city: "Lyon",
+    metaTitle: "Béton ciré à Lyon | Sol, salle de bain, douche à l’italienne – Devis",
+    metaDescription:
+      "Artisan béton ciré à Lyon : sols, salle de bain, douche à l’italienne, murs décoratifs et plans vasques. Finition durable, devis rapide.",
     intro:
-      "Vous cherchez un artisan spécialisé en béton ciré à Lyon ? Nous réalisons des sols, salles de bain, douches à l’italienne et surfaces décoratives en béton ciré, avec une finition durable et facile d’entretien.",
+      "Vous cherchez un artisan spécialisé en béton ciré à Lyon ? Nous réalisons des surfaces continues et élégantes (sols, salles de bain, douches à l’italienne, murs décoratifs) avec une finition soignée et durable.",
     bullets: [
-      "Béton ciré au sol : rénovation ou construction neuve, rendu uniforme et contemporain.",
-      "Salle de bain & douche à l’italienne : mise en œuvre adaptée aux pièces humides avec protection renforcée.",
-      "Murs décoratifs : effets minéraux, teintes personnalisées et rendu élégant.",
-      "Plans vasques, éviers et surfaces sur mesure : fabrication adaptée à vos dimensions.",
-      "Accompagnement : conseils techniques, choix des teintes, suivi du projet.",
+      "Béton ciré au sol : rénovation ou neuf, rendu uniforme et contemporain.",
+      "Salle de bain & douche à l’italienne : protection renforcée, entretien facile.",
+      "Murs décoratifs : effets minéraux et teintes personnalisées.",
+      "Plans vasques / crédences : solutions sur mesure adaptées à votre usage.",
+      "Accompagnement : conseils, choix des finitions et suivi du chantier.",
     ],
-    ctaTitle: "Devis béton ciré à Lyon",
-    ctaText:
-      "Décrivez votre besoin (surface, pièce, support, teinte souhaitée). Nous vous répondons rapidement avec une estimation et les étapes d’intervention.",
+    nearby: ["Villeurbanne", "Caluire-et-Cuire", "Oullins", "Tassin-la-Demi-Lune", "Bron"],
     faq: [
-      { q: "Le béton ciré est-il adapté aux salles de bain à Lyon ?", a: "Oui, avec une préparation rigoureuse du support et une protection adaptée (système étanche + finitions), il est parfaitement compatible avec les pièces humides." },
-      { q: "Quel délai pour un chantier béton ciré ?", a: "Le délai dépend de la surface, du support et des temps de séchage. Après échange, nous vous donnons un planning clair." },
+      { q: "Le béton ciré est-il adapté à une douche à l’italienne ?", a: "Oui, avec une préparation du support et un système de protection adapté aux pièces humides (étanchéité + finition), le béton ciré est une excellente solution en douche." },
+      { q: "Combien de temps durent les travaux ?", a: "Selon la surface et l’état du support, comptez en général quelques jours. Nous vous confirmons un planning précis après visite." },
+      { q: "Comment entretenir un béton ciré ?", a: "Entretien simple : produits doux, pas d’abrasif. Nous vous conseillons sur les bons gestes et la protection à long terme." },
     ],
   },
 
   macon: {
-    title: "Béton ciré à Mâcon | Sols, douche & salle de bain",
-    description:
-      "Béton ciré à Mâcon : sols, murs, douche à l’italienne, salle de bain, plans de travail. Finition soignée, devis rapide.",
-    h1: "Béton ciré à Mâcon",
+    slug: "macon",
+    city: "Mâcon",
+    metaTitle: "Béton ciré à Mâcon | Sol, salle de bain, douche – Devis rapide",
+    metaDescription:
+      "Béton ciré à Mâcon : sols, salle de bain, douche à l’italienne, murs décoratifs et créations sur mesure. Artisan local, devis personnalisé.",
     intro:
-      "À Mâcon et alentours, nous réalisons vos projets en béton ciré : sols, murs, douche à l’italienne et surfaces sur mesure, avec un rendu uniforme et moderne.",
+      "À Mâcon et alentours, nous réalisons des projets en béton ciré sur mesure : sols, salles de bain, douches à l’italienne, murs décoratifs et surfaces techniques. Objectif : une finition haut de gamme, durable et facile d’entretien.",
     bullets: [
-      "Sols en béton ciré : aspect continu, entretien simple.",
-      "Douche à l’italienne : protection renforcée pour pièce humide.",
-      "Salle de bain : finitions adaptées (antidérapant possible selon besoin).",
-      "Murs décoratifs : teintes et effets maîtrisés.",
-      "Sur mesure : plans vasques / crédences / plans de travail.",
+      "Sols en béton ciré : aspect moderne, continuité visuelle sans joints.",
+      "Pièces humides : solutions adaptées (douche, salle de bain).",
+      "Murs décoratifs : rendu minéral et teintes maîtrisées.",
+      "Sur-mesure : plans, vasques, crédences selon contraintes du lieu.",
+      "Suivi complet : conseils techniques et accompagnement finitions.",
     ],
-    ctaTitle: "Demander un devis à Mâcon",
-    ctaText:
-      "Expliquez-nous votre projet (pièce, surface, support, rendu attendu). Nous vous proposons une solution adaptée et un devis rapide.",
+    nearby: ["Charnay-lès-Mâcon", "Sancé", "Saint-Laurent-sur-Saône", "Crêches-sur-Saône", "Mâconnais"],
     faq: [
-      { q: "Le béton ciré nécessite-t-il beaucoup d’entretien ?", a: "Non : un entretien régulier doux suffit. La durabilité dépend surtout de la bonne protection et de l’usage." },
-      { q: "Peut-on poser du béton ciré sur un carrelage existant ?", a: "Souvent oui, après préparation et primaire adaptés. On vérifie la stabilité du support avant." },
+      { q: "Peut-on poser du béton ciré sur un carrelage existant ?", a: "Souvent oui, selon la stabilité et la préparation. Une visite permet de valider la faisabilité et la préparation nécessaire." },
+      { q: "Est-ce compatible avec un chauffage au sol ?", a: "Oui, si le support est adapté et le système mis en œuvre correctement. Nous vérifions tout avant travaux." },
+      { q: "Le béton ciré est-il antidérapant ?", a: "Il existe des finitions et protections qui améliorent l’adhérence, particulièrement utiles en salle de bain et douche." },
     ],
   },
 
   dijon: {
-    title: "Béton ciré à Dijon | Artisan, sol & salle de bain",
-    description:
-      "Artisan béton ciré à Dijon : sol, murs, douche, salle de bain, surfaces sur mesure. Résultat durable, esthétique, devis rapide.",
-    h1: "Béton ciré à Dijon",
+    slug: "dijon",
+    city: "Dijon",
+    metaTitle: "Béton ciré à Dijon | Sols, salle de bain, murs décoratifs – Devis",
+    metaDescription:
+      "Béton ciré à Dijon : sols, salle de bain, douche à l’italienne, murs et surfaces sur mesure. Finition esthétique, devis rapide et conseils.",
     intro:
-      "Vous avez un projet de béton ciré à Dijon ? Nous vous accompagnons de la préparation du support jusqu’aux finitions, pour un rendu minéral moderne et durable.",
+      "À Dijon, nous intervenons pour des réalisations en béton ciré esthétiques et résistantes : sols, salles de bain, douches à l’italienne, murs décoratifs et éléments sur mesure. Chaque projet est adapté au support et à l’usage.",
     bullets: [
-      "Béton ciré au sol : rénovation ou neuf, rendu uniforme.",
-      "Salle de bain & douche : systèmes adaptés aux pièces humides.",
-      "Murs décoratifs : effets et teintes personnalisées.",
-      "Plans de travail / crédences : surfaces élégantes et résistantes.",
-      "Conseils et suivi : choix techniques, finitions, protection.",
+      "Rénovation ou neuf : rendu uniforme, moderne et durable.",
+      "Salles de bain / douches : mise en œuvre technique pour pièce humide.",
+      "Murs décoratifs : ambiance minérale, teintes personnalisées.",
+      "Plans & crédences : surfaces pratiques et faciles à entretenir.",
+      "Conseils & finitions : choix de teinte, protection et entretien.",
     ],
-    ctaTitle: "Devis béton ciré à Dijon",
-    ctaText:
-      "Dites-nous ce que vous souhaitez (sol, douche, mur, sur mesure). Nous vous répondons rapidement.",
+    nearby: ["Talant", "Chenôve", "Quetigny", "Fontaine-lès-Dijon", "Côte-d'Or"],
     faq: [
-      { q: "Le béton ciré est-il résistant ?", a: "Oui, à condition que la préparation du support et la protection soient adaptées à l’usage (pièce humide, passage, etc.)." },
-      { q: "Peut-on choisir la teinte ?", a: "Oui, nous proposons des teintes/effets variés et on valide ensemble le rendu souhaité." },
+      { q: "Quelle est la différence entre béton ciré et microciment ?", a: "Les termes sont souvent utilisés de façon proche. L’important est la méthode de mise en œuvre (préparation, couches, protection) selon l’usage." },
+      { q: "Le béton ciré se fissure-t-il ?", a: "Avec une bonne préparation du support et une mise en œuvre adaptée, on limite fortement les risques. Nous évaluons toujours le support avant." },
+      { q: "Peut-on choisir la couleur ?", a: "Oui, plusieurs teintes et effets sont possibles. Nous vous guidons pour obtenir le rendu souhaité." },
     ],
   },
 
   "chalon-sur-saone": {
-    title: "Béton ciré à Chalon-sur-Saône | Sols & douche à l’italienne",
-    description:
-      "Béton ciré à Chalon-sur-Saône : sols, murs, douche, salle de bain, sur mesure. Finition soignée, devis rapide.",
-    h1: "Béton ciré à Chalon-sur-Saône",
+    slug: "chalon-sur-saone",
+    city: "Chalon-sur-Saône",
+    metaTitle: "Béton ciré à Chalon-sur-Saône | Sol, douche, salle de bain – Devis",
+    metaDescription:
+      "Béton ciré à Chalon-sur-Saône : sols, salle de bain, douche à l’italienne, murs décoratifs et sur mesure. Artisan local, devis rapide.",
     intro:
-      "À Chalon-sur-Saône, nous réalisons des surfaces en béton ciré (sols, murs, salles de bain, douches à l’italienne) avec un rendu esthétique et facile d’entretien.",
+      "À Chalon-sur-Saône, nous réalisons des projets en béton ciré pour moderniser vos espaces : sols, murs décoratifs, salles de bain et douches à l’italienne. Une solution esthétique, continue et facile à entretenir.",
     bullets: [
-      "Sol béton ciré : aspect continu et moderne.",
-      "Douche à l’italienne : protection renforcée, finition durable.",
-      "Murs décoratifs : effets minéraux maîtrisés.",
-      "Surfaces sur mesure : crédences, plans, vasques (selon projet).",
-      "Accompagnement : conseils + suivi du chantier.",
+      "Béton ciré au sol : rendu contemporain, surfaces sans joints.",
+      "Douche à l’italienne : solution adaptée aux pièces humides.",
+      "Murs décoratifs : effets minéraux, style moderne.",
+      "Sur-mesure : crédences, plans et éléments adaptés.",
+      "Accompagnement : conseils finitions + entretien.",
     ],
-    ctaTitle: "Devis béton ciré à Chalon-sur-Saône",
-    ctaText:
-      "Expliquez votre projet : nous vous aidons à choisir la solution technique et la finition.",
+    nearby: ["Saint-Rémy", "Champforgeuil", "Châtenoy-le-Royal", "Le Creusot", "Saône-et-Loire"],
     faq: [
-      { q: "Le béton ciré est-il glissant ?", a: "On peut adapter la finition selon l’usage (pièces humides, douche) pour améliorer l’adhérence." },
-      { q: "Quelle préparation du support ?", a: "La tenue dans le temps dépend beaucoup de cette étape : on vérifie planéité, adhérence, humidité et fissures." },
+      { q: "Le béton ciré est-il facile d’entretien ?", a: "Oui : nettoyage doux, pas d’abrasif. La protection choisie joue un rôle important sur la tenue dans le temps." },
+      { q: "Peut-on faire un béton ciré sur un escalier ?", a: "Oui, selon le support. Nous proposons une mise en œuvre adaptée et une protection résistante à l’usure." },
+      { q: "Quel budget prévoir ?", a: "Le prix dépend de la surface, du support et de la finition. Nous établissons un devis personnalisé après échange/visite." },
     ],
   },
 
   "bourg-en-bresse": {
-    title: "Béton ciré à Bourg-en-Bresse | Sols, salle de bain & sur mesure",
-    description:
-      "Béton ciré à Bourg-en-Bresse : sols, murs, douche, salle de bain, surfaces sur mesure. Finition durable, devis rapide.",
-    h1: "Béton ciré à Bourg-en-Bresse",
+    slug: "bourg-en-bresse",
+    city: "Bourg-en-Bresse",
+    metaTitle: "Béton ciré à Bourg-en-Bresse | Sols, salle de bain, sur mesure – Devis",
+    metaDescription:
+      "Béton ciré à Bourg-en-Bresse : sols, douche à l’italienne, salle de bain, murs décoratifs et surfaces sur mesure. Devis rapide et suivi.",
     intro:
-      "À Bourg-en-Bresse et alentours, nous réalisons vos projets en béton ciré : sols, salles de bain, douches et surfaces décoratives sur mesure, avec un rendu uniforme et élégant.",
+      "À Bourg-en-Bresse et alentours, nous réalisons des surfaces en béton ciré sur mesure : sols, murs, salles de bain, douches à l’italienne et éléments décoratifs. Une finition durable, élégante et adaptée à votre projet.",
     bullets: [
-      "Béton ciré au sol : rénovation/neuf, rendu uniforme.",
-      "Salle de bain & douche : solutions adaptées aux pièces humides.",
-      "Murs décoratifs : teintes et effets personnalisés.",
-      "Plans / crédences : surfaces modernes et résistantes.",
-      "Suivi : conseils techniques + finitions + protection.",
+      "Sols : continuité visuelle, entretien simple.",
+      "Salle de bain / douche : protection renforcée pour pièce humide.",
+      "Murs décoratifs : effets maîtrisés, teintes personnalisées.",
+      "Sur-mesure : crédences, plans, vasques selon contraintes.",
+      "Suivi : conseils techniques et finitions.",
     ],
-    ctaTitle: "Demander un devis à Bourg-en-Bresse",
-    ctaText:
-      "Indiquez la pièce, la surface et le support : on vous répond rapidement avec une estimation et la meilleure approche.",
+    nearby: ["Viriat", "Péronnas", "Saint-Denis-lès-Bourg", "Montagnat", "Ain"],
     faq: [
-      { q: "Le béton ciré convient-il aux rénovations ?", a: "Oui, c’est même très fréquent. On adapte le système selon le support existant." },
-      { q: "Combien de temps avant utilisation ?", a: "Selon la protection et les temps de séchage, on vous donnera un délai réaliste avant remise en service." },
+      { q: "Le béton ciré convient-il à une cuisine ?", a: "Oui, notamment pour les sols et crédences, avec une protection adaptée aux taches et à l’usage quotidien." },
+      { q: "Combien de temps avant utilisation ?", a: "Selon les produits et protections, il faut respecter un temps de séchage/prise. On vous donne une consigne claire en fin de chantier." },
+      { q: "Peut-on rénover une ancienne surface ?", a: "Oui, selon le support. Nous vérifions l’état et proposons une préparation adaptée." },
     ],
   },
 };

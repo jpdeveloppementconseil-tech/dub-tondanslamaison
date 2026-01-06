@@ -1,3 +1,5 @@
+// src/pages/CityServicePage.js
+
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -10,223 +12,185 @@ function buildFaqJsonLd(faq = []) {
     mainEntity: faq.map((item) => ({
       "@type": "Question",
       name: item.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.a,
-      },
+      acceptedAnswer: { "@type": "Answer", text: item.a },
     })),
   };
 }
 
-function buildLocalBusinessJsonLd(cityName, canonicalUrl, areaServed = []) {
-  // Important: on n'invente pas d'adresse précise.
+function buildLocalBusinessJsonLd(city) {
+  const pageUrl = `${SITE.domain}/beton-cire/${city.slug}`;
+
   return {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: SITE.brand,
-    url: SITE.domain,
+    "@type": "HomeAndConstructionBusiness",
+    name: `${SITE.brand} — Béton ciré à ${city.name}`,
+    url: pageUrl,
     telephone: SITE.phone,
     email: SITE.email,
-    sameAs: [SITE.instagram],
-    areaServed: [{ "@type": "City", name: cityName }, ...areaServed.map((c) => ({ "@type": "City", name: c }))],
-    mainEntityOfPage: canonicalUrl,
+    areaServed: [
+      { "@type": "City", name: city.name },
+      { "@type": "AdministrativeArea", name: SITE.regionLabel },
+    ],
+    sameAs: [SITE.instagramUrl],
+    makesOffer: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: `Béton ciré à ${city.name}`,
+          serviceType: "Application de béton ciré",
+          areaServed: { "@type": "City", name: city.name },
+        },
+      },
+    ],
   };
 }
 
 export default function CityServicePage() {
-  const { citySlug } = useParams(); // ex: "lyon" / "bourg-en-bresse"
-  const data = CITIES[citySlug];
+  const { citySlug } = useParams();
 
-  if (!data) {
+  const city = CITIES.find((c) => c.slug === citySlug);
+
+  if (!city) {
     return (
-      <div className="p-8 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-4">Page introuvable</h1>
-        <p className="text-lg mb-6">
+      <div className="max-w-4xl mx-auto p-10">
+        <h1 className="text-2xl font-bold mb-3">Page introuvable</h1>
+        <p className="mb-4">
           La ville demandée n’existe pas (ou n’est pas encore configurée).
         </p>
-        <Link className="text-cuivre underline" to="/services">
+        <Link to="/services" className="text-cuivre hover:underline">
           Voir nos services
         </Link>
       </div>
     );
   }
 
-  const canonicalUrl = `${SITE.domain}${data.seo.canonicalPath}`;
-  const faqJsonLd = data.faq?.length ? buildFaqJsonLd(data.faq) : null;
-  const businessJsonLd = buildLocalBusinessJsonLd(data.city, canonicalUrl, data.nearby || []);
+  const title = `Béton ciré à ${city.name} | ${SITE.brand}`;
+  const canonical = `${SITE.domain}/beton-cire/${city.slug}`;
 
-  // Maillage interne : on affiche 4 autres villes (équilibré)
-  const otherCities = CITY_PAGES.filter((p) => p.slug !== data.slug).slice(0, 4);
+  const prestations = [
+    `Béton ciré au sol : rénovation ou construction neuve, rendu uniforme et contemporain.`,
+    `Salle de bain & douche à l’italienne : mise en œuvre adaptée aux pièces humides avec protection renforcée.`,
+    `Murs décoratifs : effets minéraux et teintes personnalisées.`,
+    `Plans, vasques, éviers et surfaces sur mesure : fabrication adaptée à vos dimensions.`,
+    `Accompagnement complet : conseils techniques, choix des teintes et suivi du projet.`,
+  ];
+
+  const otherCities = CITY_PAGES.filter((c) => c.slug !== city.slug);
 
   return (
-    <div className="p-8 max-w-5xl mx-auto">
-      {/* SEO */}
+    <div className="max-w-5xl mx-auto p-10">
       <Helmet>
-        <title>{data.seo.title}</title>
-        <meta name="description" content={data.seo.description} />
-        <link rel="canonical" href={canonicalUrl} />
+        <title>{title}</title>
+        <link rel="canonical" href={canonical} />
+        <meta name="description" content={city.metaDescription} />
 
-        {/* Open Graph (partage) */}
-        <meta property="og:title" content={data.seo.title} />
-        <meta property="og:description" content={data.seo.description} />
-        <meta property="og:url" content={canonicalUrl} />
+        {/* OpenGraph */}
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={city.metaDescription} />
+        <meta property="og:url" content={canonical} />
         <meta property="og:type" content="website" />
 
         {/* JSON-LD */}
-        <script type="application/ld+json">{JSON.stringify(businessJsonLd)}</script>
-        {faqJsonLd && (
-          <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
-        )}
+        <script type="application/ld+json">
+          {JSON.stringify(buildLocalBusinessJsonLd(city))}
+        </script>
+        {city.faq?.length ? (
+          <script type="application/ld+json">
+            {JSON.stringify(buildFaqJsonLd(city.faq))}
+          </script>
+        ) : null}
       </Helmet>
 
-      {/* H1 */}
-      <h1 className="text-4xl font-bold mb-6">
-        Béton ciré à {data.city} — sols, salle de bain, douche italienne & sur mesure
+      {/* H1 + intro */}
+      <h1 className="text-4xl font-bold mb-4">
+        Béton ciré à {city.name}
       </h1>
 
-      {/* Intro */}
-      <div className="text-lg space-y-4 mb-10">
-        {data.intro.map((p, idx) => (
-          <p key={idx}>{p}</p>
-        ))}
-      </div>
-
-      {/* Contexte local */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-bold mb-4">
-          Béton ciré à {data.city} : contexte local & usages fréquents
-        </h2>
-        <p className="text-lg">{data.localContext}</p>
-      </section>
+      <p className="text-lg mb-10">
+        {city.shortPitch} Nous intervenons à {city.name} et dans les environs,
+        avec une préparation soignée du support, une application précise et une
+        protection adaptée à l’usage (notamment en pièce humide).
+      </p>
 
       {/* Prestations */}
       <section className="mb-10">
         <h2 className="text-2xl font-bold mb-4">
-          Nos prestations en béton ciré à {data.city}
+          Nos prestations en béton ciré à {city.name}
         </h2>
+        <ul className="list-disc ml-6 space-y-2">
+          {prestations.map((p) => (
+            <li key={p}>{p}</li>
+          ))}
+        </ul>
+      </section>
 
-        <ul className="list-disc pl-6 space-y-2 text-lg">
-          {data.prestations.map((item) => (
-            <li key={item.title}>
-              <span className="font-semibold">{item.title}</span> : {item.text}
+      {/* Devis / CTA */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-bold mb-3">Devis béton ciré à {city.name}</h2>
+        <p className="mb-5">
+          Vous avez un projet à {city.name} ou autour ? Décrivez-nous votre besoin
+          (surface, type de pièce, support, teinte souhaitée). Nous vous répondons
+          rapidement avec une estimation et les étapes d’intervention.
+        </p>
+
+        <Link
+          to="/contact"
+          className="inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-3 rounded"
+        >
+          Demander un devis
+        </Link>
+      </section>
+
+      {/* Autour de la ville */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-bold mb-3">Interventions autour de {city.name}</h2>
+        <p className="mb-3">
+          Nous intervenons également dans les communes proches de {city.name} :
+        </p>
+        <p className="font-semibold">
+          {city.nearby.join(" · ")}.
+        </p>
+      </section>
+
+      {/* FAQ */}
+      {city.faq?.length ? (
+        <section className="mb-10">
+          <h2 className="text-2xl font-bold mb-4">Questions fréquentes</h2>
+          <div className="space-y-4">
+            {city.faq.map((item) => (
+              <div key={item.q} className="border rounded p-4">
+                <p className="font-semibold mb-2">{item.q}</p>
+                <p>{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {/* Liens internes */}
+      <section className="mb-10">
+        <h2 className="text-xl font-bold mb-3">Béton ciré dans d’autres villes</h2>
+        <ul className="list-disc ml-6 space-y-2">
+          {otherCities.map((c) => (
+            <li key={c.slug}>
+              <Link to={c.path} className="text-cuivre hover:underline">
+                Béton ciré à {c.name}
+              </Link>
             </li>
           ))}
         </ul>
 
         <div className="mt-6">
           <Link to="/services" className="text-cuivre hover:underline">
-            Voir aussi la page “Services”
+            Voir tous nos services
+          </Link>
+          <span className="mx-2">·</span>
+          <Link to="/projects" className="text-cuivre hover:underline">
+            Voir nos réalisations
           </Link>
         </div>
-      </section>
-
-      {/* Avantages */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-bold mb-4">
-          Les avantages du béton ciré pour votre projet à {data.city}
-        </h2>
-
-        <ul className="list-disc pl-6 space-y-2 text-lg">
-          {data.benefits.map((b, idx) => (
-            <li key={idx}>{b}</li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Méthode */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-bold mb-4">
-          Notre méthode d’application (qualité & durabilité)
-        </h2>
-        <ol className="list-decimal pl-6 space-y-2 text-lg">
-          {data.process.map((step, idx) => (
-            <li key={idx}>{step}</li>
-          ))}
-        </ol>
-      </section>
-
-      {/* Prix + Exemples */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-bold mb-4">
-          Prix d’un béton ciré à {data.city} : ce qui fait varier un devis
-        </h2>
-
-        <p className="text-lg mb-4">
-          Chaque projet est différent. Voici les critères principaux qui influencent la préparation,
-          la durée du chantier et la finition finale :
-        </p>
-
-        <ul className="list-disc pl-6 space-y-2 text-lg mb-6">
-          {data.priceFactors.map((p, idx) => (
-            <li key={idx}>{p}</li>
-          ))}
-        </ul>
-
-        <h3 className="text-xl font-semibold mb-3">
-          Exemples de projets béton ciré à {data.city}
-        </h3>
-        <ul className="list-disc pl-6 space-y-2 text-lg">
-          {data.projectExamples.map((ex, idx) => (
-            <li key={idx}>{ex}</li>
-          ))}
-        </ul>
-      </section>
-
-      {/* CTA devis */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-bold mb-4">Devis béton ciré à {data.city}</h2>
-        <p className="text-lg mb-4">
-          Décrivez-nous votre besoin (surface, pièce, support, teinte souhaitée). Nous
-          vous répondons rapidement avec une estimation et les étapes d’intervention.
-        </p>
-
-        <Link
-          to="/contact"
-          className="inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-3 rounded-lg shadow"
-        >
-          Demander un devis
-        </Link>
-      </section>
-
-      {/* Zone autour */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-bold mb-4">Interventions autour de {data.city}</h2>
-        <p className="text-lg">
-          Nous intervenons également dans les communes proches de {data.city} :{" "}
-          <span className="font-semibold">{data.nearby.join(" · ")}</span>.
-        </p>
-      </section>
-
-      {/* FAQ */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-bold mb-6">
-          Questions fréquentes — béton ciré à {data.city}
-        </h2>
-
-        <div className="space-y-4">
-          {data.faq.map((item, idx) => (
-            <div key={idx} className="bg-white rounded-xl shadow-sm p-5">
-              <h3 className="text-lg font-semibold mb-2">{item.q}</h3>
-              <p className="text-base text-gray-700">{item.a}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Maillage interne */}
-      <section className="mb-2">
-        <h2 className="text-2xl font-bold mb-4">Autres zones d’intervention</h2>
-        <ul className="list-disc pl-6 space-y-2 text-lg">
-          {otherCities.map((c) => (
-            <li key={c.slug}>
-              <Link to={c.path} className="text-cuivre hover:underline">
-                Béton ciré à {c.city}
-              </Link>
-            </li>
-          ))}
-        </ul>
       </section>
     </div>
   );
 }
-

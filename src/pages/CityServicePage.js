@@ -12,185 +12,98 @@ function buildFaqJsonLd(faq = []) {
     mainEntity: faq.map((item) => ({
       "@type": "Question",
       name: item.q,
-      acceptedAnswer: { "@type": "Answer", text: item.a },
-    })),
-  };
-}
-
-function buildLocalBusinessJsonLd(city) {
-  const pageUrl = `${SITE.domain}/beton-cire/${city.slug}`;
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "HomeAndConstructionBusiness",
-    name: `${SITE.brand} — Béton ciré à ${city.name}`,
-    url: pageUrl,
-    telephone: SITE.phone,
-    email: SITE.email,
-    areaServed: [
-      { "@type": "City", name: city.name },
-      { "@type": "AdministrativeArea", name: SITE.regionLabel },
-    ],
-    sameAs: [SITE.instagramUrl],
-    makesOffer: [
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: `Béton ciré à ${city.name}`,
-          serviceType: "Application de béton ciré",
-          areaServed: { "@type": "City", name: city.name },
-        },
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
       },
-    ],
+    })),
   };
 }
 
 export default function CityServicePage() {
   const { citySlug } = useParams();
+  const city = (citySlug || "").toLowerCase();
+  const data = CITY_PAGES[city];
 
-  const city = CITIES.find((c) => c.slug === citySlug);
-
-  if (!city) {
+  // Si slug inconnu => message + lien retour
+  if (!data) {
     return (
-      <div className="max-w-4xl mx-auto p-10">
-        <h1 className="text-2xl font-bold mb-3">Page introuvable</h1>
-        <p className="mb-4">
-          La ville demandée n’existe pas (ou n’est pas encore configurée).
-        </p>
-        <Link to="/services" className="text-cuivre hover:underline">
+      <section className="p-12 text-center">
+        <h1 className="text-2xl font-semibold">Page introuvable</h1>
+        <p className="mt-2">La ville demandée n’existe pas (ou n’est pas encore configurée).</p>
+        <Link className="inline-block mt-4 text-cuivre hover:underline" to="/services">
           Voir nos services
         </Link>
-      </div>
+      </section>
     );
   }
 
-  const title = `Béton ciré à ${city.name} | ${SITE.brand}`;
-  const canonical = `${SITE.domain}/beton-cire/${city.slug}`;
-
-  const prestations = [
-    `Béton ciré au sol : rénovation ou construction neuve, rendu uniforme et contemporain.`,
-    `Salle de bain & douche à l’italienne : mise en œuvre adaptée aux pièces humides avec protection renforcée.`,
-    `Murs décoratifs : effets minéraux et teintes personnalisées.`,
-    `Plans, vasques, éviers et surfaces sur mesure : fabrication adaptée à vos dimensions.`,
-    `Accompagnement complet : conseils techniques, choix des teintes et suivi du projet.`,
-  ];
-
-  const otherCities = CITY_PAGES.filter((c) => c.slug !== city.slug);
+  const cityInfo = CITIES.find((c) => c.slug === city);
+  const canonical = `${SITE.siteUrl}/beton-cire-${city}`;
 
   return (
-    <div className="max-w-5xl mx-auto p-10">
+    <main className="p-12 max-w-4xl mx-auto">
       <Helmet>
-        <title>{title}</title>
+        <title>{data.title}</title>
+        <meta name="description" content={data.description} />
         <link rel="canonical" href={canonical} />
-        <meta name="description" content={city.metaDescription} />
 
-        {/* OpenGraph */}
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={city.metaDescription} />
+        {/* OpenGraph simple */}
+        <meta property="og:title" content={data.title} />
+        <meta property="og:description" content={data.description} />
         <meta property="og:url" content={canonical} />
-        <meta property="og:type" content="website" />
 
-        {/* JSON-LD */}
-        <script type="application/ld+json">
-          {JSON.stringify(buildLocalBusinessJsonLd(city))}
-        </script>
-        {city.faq?.length ? (
-          <script type="application/ld+json">
-            {JSON.stringify(buildFaqJsonLd(city.faq))}
-          </script>
-        ) : null}
+        {/* FAQ JSON-LD */}
+        {Array.isArray(data.faq) && data.faq.length > 0 && (
+          <script type="application/ld+json">{JSON.stringify(buildFaqJsonLd(data.faq))}</script>
+        )}
       </Helmet>
 
-      {/* H1 + intro */}
-      <h1 className="text-4xl font-bold mb-4">
-        Béton ciré à {city.name}
-      </h1>
+      <h1 className="text-3xl font-bold">{data.h1}</h1>
+      <p className="mt-4 text-lg">{data.intro}</p>
 
-      <p className="text-lg mb-10">
-        {city.shortPitch} Nous intervenons à {city.name} et dans les environs,
-        avec une préparation soignée du support, une application précise et une
-        protection adaptée à l’usage (notamment en pièce humide).
-      </p>
+      <h2 className="mt-10 text-2xl font-semibold">Nos prestations en béton ciré à {cityInfo?.name || data.h1}</h2>
+      <ul className="mt-4 list-disc pl-6 space-y-2">
+        {data.bullets.map((b, idx) => (
+          <li key={idx}>{b}</li>
+        ))}
+      </ul>
 
-      {/* Prestations */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-bold mb-4">
-          Nos prestations en béton ciré à {city.name}
-        </h2>
-        <ul className="list-disc ml-6 space-y-2">
-          {prestations.map((p) => (
-            <li key={p}>{p}</li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Devis / CTA */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-bold mb-3">Devis béton ciré à {city.name}</h2>
-        <p className="mb-5">
-          Vous avez un projet à {city.name} ou autour ? Décrivez-nous votre besoin
-          (surface, type de pièce, support, teinte souhaitée). Nous vous répondons
-          rapidement avec une estimation et les étapes d’intervention.
-        </p>
+      <section className="mt-10 p-6 rounded-xl bg-white shadow">
+        <h2 className="text-xl font-semibold">{data.ctaTitle}</h2>
+        <p className="mt-2">{data.ctaText}</p>
 
         <Link
           to="/contact"
-          className="inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-3 rounded"
+          className="inline-block mt-5 bg-cuivre text-white px-6 py-3 rounded-lg hover:opacity-90"
         >
           Demander un devis
         </Link>
       </section>
 
-      {/* Autour de la ville */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-bold mb-3">Interventions autour de {city.name}</h2>
-        <p className="mb-3">
-          Nous intervenons également dans les communes proches de {city.name} :
-        </p>
-        <p className="font-semibold">
-          {city.nearby.join(" · ")}.
-        </p>
-      </section>
-
-      {/* FAQ */}
-      {city.faq?.length ? (
-        <section className="mb-10">
-          <h2 className="text-2xl font-bold mb-4">Questions fréquentes</h2>
-          <div className="space-y-4">
-            {city.faq.map((item) => (
-              <div key={item.q} className="border rounded p-4">
-                <p className="font-semibold mb-2">{item.q}</p>
-                <p>{item.a}</p>
-              </div>
-            ))}
-          </div>
+      {cityInfo?.nearby?.length ? (
+        <section className="mt-10">
+          <h2 className="text-xl font-semibold">Interventions autour de {cityInfo.name}</h2>
+          <p className="mt-2">
+            Nous intervenons également dans les communes proches :{" "}
+            <span className="font-semibold">{cityInfo.nearby.join(" · ")}</span>.
+          </p>
         </section>
       ) : null}
 
-      {/* Liens internes */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold mb-3">Béton ciré dans d’autres villes</h2>
-        <ul className="list-disc ml-6 space-y-2">
-          {otherCities.map((c) => (
+      <section className="mt-12">
+        <h2 className="text-xl font-semibold">Zones d’intervention</h2>
+        <p className="mt-2">Retrouvez aussi nos pages locales :</p>
+        <ul className="mt-3 list-disc pl-6 space-y-1">
+          {CITIES.map((c) => (
             <li key={c.slug}>
-              <Link to={c.path} className="text-cuivre hover:underline">
+              <Link className="text-cuivre hover:underline" to={`/beton-cire-${c.slug}`}>
                 Béton ciré à {c.name}
               </Link>
             </li>
           ))}
         </ul>
-
-        <div className="mt-6">
-          <Link to="/services" className="text-cuivre hover:underline">
-            Voir tous nos services
-          </Link>
-          <span className="mx-2">·</span>
-          <Link to="/projects" className="text-cuivre hover:underline">
-            Voir nos réalisations
-          </Link>
-        </div>
       </section>
-    </div>
+    </main>
   );
 }

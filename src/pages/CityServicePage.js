@@ -66,6 +66,27 @@ export default function CityServicePage() {
       <h1 className="text-3xl font-bold mb-6">Béton ciré à {city.name}</h1>
 
       <p className="mb-8">{page.intro}</p>
+      {city.slug === "lyon" && (
+  <>
+    <h2 className="text-2xl font-semibold mb-4">
+      Béton ciré à Lyon : un choix idéal
+    </h2>
+    <p className="mb-6">
+      Le béton ciré est particulièrement apprécié à Lyon pour son
+      esthétique contemporaine et sa capacité à s’adapter aux
+      appartements anciens, lofts et rénovations haut de gamme.
+    </p>
+
+    <h2 className="text-2xl font-semibold mb-4">
+      Quartiers de Lyon où nous intervenons
+    </h2>
+    <p className="mb-8">
+      Nous intervenons régulièrement dans les quartiers de Lyon :
+      Presqu’île, Croix-Rousse, Part-Dieu, Confluence, Monplaisir,
+      Villeurbanne et communes limitrophes.
+    </p>
+  </>
+)}
 
       <h2 className="text-2xl font-semibold mb-4">
         Nos prestations en béton ciré à {city.name}

@@ -39,17 +39,38 @@ export const CITIES = [
 // Contenus SEO “équilibrés” (5 villes)
 export const CITY_PAGES = {
   lyon: {
-    intro: `
+  intro: `
 Vous recherchez un artisan spécialisé en béton ciré à Lyon ?
 Nous accompagnons particuliers et professionnels pour des projets
 de sols, salles de bain, douches à l’italienne et surfaces décoratives
 en béton ciré, avec une finition haut de gamme et durable.
 
-Grâce à notre expérience sur des chantiers lyonnais,
-nous adaptons chaque réalisation aux contraintes des appartements
-anciens, des lofts contemporains et des constructions modernes.
+Grâce à notre expérience sur des chantiers lyonnais, nous adaptons
+chaque réalisation aux contraintes des appartements anciens,
+des lofts contemporains et des constructions modernes.
 `,
-
+  services: [
+    "Béton ciré au sol : rénovation ou construction neuve, rendu uniforme et contemporain.",
+    "Salle de bain & douche à l’italienne : mise en œuvre adaptée aux pièces humides avec protection renforcée.",
+    "Murs décoratifs en béton ciré : effets minéraux et teintes personnalisées.",
+    "Plans vasques, éviers et surfaces sur mesure : fabrication adaptée à vos dimensions.",
+    "Accompagnement complet : conseils techniques, choix des teintes et suivi du projet.",
+  ],
+  faq: [
+    {
+      q: "Quel est le prix d’un béton ciré à Lyon ?",
+      a: "Le prix dépend de la surface, du support et de la finition souhaitée. Contactez-nous pour un devis précis.",
+    },
+    {
+      q: "Le béton ciré est-il adapté aux douches à l’italienne ?",
+      a: "Oui, à condition d’utiliser un système compatible pièces humides et une protection adaptée.",
+    },
+    {
+      q: "Combien de temps dure un chantier ?",
+      a: "Selon la surface et la préparation du support, cela varie généralement de quelques jours à une semaine.",
+    },
+  ],
+},
 
   macon: {
     intro:

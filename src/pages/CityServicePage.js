@@ -2,7 +2,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { CITIES, CITY_PAGES, SITE } from "./citiesData";
+import { CITIES, CITY_PAGES } from "./citiesData";
 
 function normalizeSlug(input = "") {
   return String(input)

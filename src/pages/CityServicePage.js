@@ -50,10 +50,9 @@ export default function CityServicePage() {
     );
   }
 
-  const title = `Artisan béton ciré à ${city.name} | ${SITE.siteName}`;
-  const description = `Artisan spécialisé en béton ciré à ${city.name}. Réalisation de sols, salles de bain, douches italiennes et surfaces sur mesure. Devis gratuit.`;
-  const canonical = `${SITE.domain}/beton-cire-${city.slug}`;
-
+ const title = `Artisan béton ciré à ${city.name} | Du Béton dans la Maison`;
+const description = `Artisan spécialisé en béton ciré à ${city.name}. Réalisation de sols, salles de bain et douches italiennes sur mesure.`;
+const canonical = `${SITE.domain}/beton-cire-${city.slug}`;
   return (
     <section className="p-12 max-w-4xl mx-auto">
       <Helmet>

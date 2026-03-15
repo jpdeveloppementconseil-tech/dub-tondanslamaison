@@ -30,13 +30,19 @@ export const CITY_PAGES = Object.fromEntries(
   CITIES.map((city) => [
     city.slug,
     {
+      title: `Béton ciré à ${city.name} | ${SITE.siteName}`,
+      description: `Artisan spécialisé dans le béton ciré à ${city.name}. Réalisation de sols, salles de bain, douches italiennes et surfaces décoratives sur mesure.`,
+      canonical: `${SITE.domain}/beton-cire-${city.slug}`,
+
       intro: `Nous réalisons des projets en béton ciré sur mesure à ${city.name}, pour les sols, salles de bain, douches italiennes et surfaces décoratives.`,
+
       services: [
         `Béton ciré pour sols à ${city.name}`,
         `Béton ciré pour salle de bain à ${city.name}`,
         `Douche italienne en béton ciré à ${city.name}`,
         `Murs et surfaces décoratives en béton ciré à ${city.name}`,
       ],
+
       faq: [
         {
           q: `Proposez-vous le béton ciré pour salle de bain à ${city.name} ?`,

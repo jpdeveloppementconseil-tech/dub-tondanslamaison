@@ -17,11 +17,11 @@ function Hero() {
       {/* contenu */}
       <div className="relative text-center text-white px-6 py-8 backdrop-blur-md bg-black/30 rounded-lg shadow-xl max-w-xl">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          L’élégance du béton ciré
+           Artisan béton ciré à Mâcon
         </h1>
 
         <p className="text-lg md:text-xl mb-6">
-          Sur mesure pour vos espaces en Bourgogne et Rhône-Alpes
+          Réalisation de sols, salles de bain et douches italiennes en béton ciré sur mesure.
         </p>
 
         <a

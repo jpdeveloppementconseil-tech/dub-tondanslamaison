@@ -1,7 +1,7 @@
 // src/pages/citiesData.js
 
 export const SITE = {
-  brand: "JP Développement Conseil",
+  brand: "Du Béton dans la Maison",
   siteName: "Du Béton dans la Maison",
   domain: "https://dubetondanslamaison.com",
   phone: "06 98 55 66 48",
@@ -73,9 +73,9 @@ des lofts contemporains et des constructions modernes.
 },
 
   macon: {
-    intro:
-      "Pour un projet de béton ciré à Mâcon, nous vous accompagnons de la préparation du support à la finition. Sols, douches à l’italienne, salles de bain, murs décoratifs : un rendu élégant et facile d’entretien.",
-    services: [
+  intro:
+    "Artisan spécialisé en béton ciré à Mâcon, nous vous accompagnons de la préparation du support à la finition. Nous réalisons des sols, douches à l’italienne, salles de bain et murs décoratifs en béton ciré avec un rendu élégant, durable et facile d’entretien.",
+  services: [
       "Sols en béton ciré : aspect continu, entretien simple, rendu haut de gamme.",
       "Salle de bain : application adaptée aux zones humides, protection renforcée.",
       "Douche à l’italienne : étanchéité + finitions antidérapantes si besoin.",
